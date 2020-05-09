@@ -9,6 +9,7 @@ public class Main {
     private static ArrayList<String> ordlistan = new ArrayList<>();
     private static ArrayList<String> felGissningar = new ArrayList<>();
     private static String fyllnadsOrd = "";
+    private static ArrayList<String> storShrek = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -37,9 +38,15 @@ public class Main {
         while(exit1==false);
 
         skrivHejdåMeddelande();
-        
+
     }
 
+    /**
+     * Denna metod ankallar andra metoder för att spela spelet utifrån vad användaren skriver in för siffra; den tillåter
+     * användaren att välja svårighetsgrad.
+     *
+     * @param svårighetsgrad är det värdet som användaren skickade in ifrån main metoden för att välja svårighetsgrad.
+     */
     private static void startaSpel(int svårighetsgrad) {
         switch (svårighetsgrad){
 
@@ -56,11 +63,17 @@ public class Main {
 
     }
 
+    /**
+     * Denna metod påbörjar spelet i spelläget lätt svårighet, alltså med lätta ord.
+     */
     private static void lättSpel() {
         populeraLättOrdlista();
         spelKärna();
     }
 
+    /**
+     * Denna metod rensar orden från förra spelomgången och fyller på med lätta ord för det lätta spelläget.
+     */
     private static void populeraLättOrdlista() {
         ordlistan.clear();
         ordlistan.add("SNOPP");
@@ -69,11 +82,17 @@ public class Main {
         ordlistan.add("rumpa");
     }
 
+    /**
+     * Denna metod påbörjar spelet i spelläget medelsvårighet, alltså med medelsvåra ord.
+     */
     private static void mellanSpel() {
         populeraMellanOrdlista();
         spelKärna();
     }
 
+    /**
+     * Denna metod rensar orden från förra spelomgången och fyller på med svåra ord för det svåra spelläget.
+     */
     private static void populeraMellanOrdlista() {
         ordlistan.clear();
         ordlistan.add("Snopparnas");
@@ -82,21 +101,41 @@ public class Main {
         ordlistan.add("Svordomar");
     }
 
+    /**
+     *  Denna metod påbörjar spelet i spelläget svår svårighet, alltså med svåra ord.
+     */
     private static void svårSpel() {
         populeraSvårOrdlista();
         spelKärna();
     }
 
+    /**
+     * Denna metod rensar orden från förra spelomgången och fyller på med svåra ord för det svåra spelläget.
+     */
     private static void populeraSvårOrdlista() {
-
+        ordlistan.clear();
+        ordlistan.add("Motorcykeldäcksekernippelnyckel");
+        ordlistan.add("Hyponeurikostiskadiafragmakontravibrationer ");
+        ordlistan.add("Nagellackborttagningsmedelsradioreklam");
+        ordlistan.add("Förstamajdemonstrationstalstolsuppsättarlärling");
+        ordlistan.add("Denitrifikationsbakteriekulturaliseringsutvecklingsförmåga");
+        ordlistan.add("Flaggstångsknoppsputspoleringsmedelsflaskskorksetikettspåklistrare");
     }
+
+    /**
+     * Denna metod är den s.k. kärnan av hänga gubbe spelet, det är här som majoriteten av koden körs. Den består av
+     * många mindre metoder som är deklarerade på andra ställen men kortfattat vad den gör är i princip detta: den
+     * rensar ordet från föregående runda, den väljer ut ett slumpvalt ord efter vilken svårighetsgrad som spelaren väljer,
+     * den låter dig gissa och jämför gissningen med ordet och kollar om det finns karaktärer/bokstäver som stämmer överens
+     * med varandra, den ger dig feedback beroende på om din gissning var korrekt eller ej.
+     */
 
     private static void spelKärna() {
         felGissningar.clear();
         String svar = hämtaSlumpvaltOrd();
         initfyllnadsOrd(svar);
         for (int försök = 0; försök <7; försök++) {
-            System.out.println("Gissa nu för fan!");
+            System.out.println("\n" + "Gissa nu för fan!" + "\n");
             String gissning = input.nextLine();
 
             if(felGissningar.contains(gissning)){
@@ -135,12 +174,27 @@ public class Main {
         }
     }
 
+    /**
+     * Denna metod ör den som gör så att det står "*":or istället för att inte stå något alls innan använderen gissat.
+     *
+     * @param svar är det rätta ordet.
+     */
+
     private static void initfyllnadsOrd(String svar) {
         fyllnadsOrd = "";
         for (int i = 0; i < svar.length(); i++) {
             fyllnadsOrd += "*";
         }
     }
+
+    /**
+     *Denna metod skickar ut statusmeddelande så att användaren ser hur det går för den.
+     *
+     * @param korrekt är en boolean som är sann när du har gissat rätt, det defineras i metodens spelKärna.
+     * @param svar är det rätta ordet.
+     * @param gissningChar är användarens gissning i form av en char.
+     * @param försök är antalet gissningar kvar.
+     */
 
     private static void uppdateraStatus(boolean korrekt, String svar, char gissningChar, int försök) {
         if(korrekt){
@@ -154,11 +208,41 @@ public class Main {
         }
         else {
         }
+        skapaShrek(försök);
         System.out.println(fyllnadsOrd);
         System.out.println(felGissningar.toString());
         System.out.println("Du har " + (6 - försök) + " försök kvar.");
 
     }
+
+    private static void skapaShrek(int försök) {
+        storShrek.clear();
+        storShrek.add("⠟⠑⡄⠀⠀⠀⠀⠀⠀⠀ ⣀⣀⣤⣤⣤⣀⡀");
+        storShrek.add("⠸⡇⠀⠿⡀⠀⠀⠀⣀⡴⢿⣿⣿⣿⣿⣿⣿⣿⣷⣦⡀");
+        storShrek.add("⠀⠀⠀⠀⠑⢄⣠⠾⠁⣀⣄⡈⠙⣿⣿⣿⣿⣿⣿⣿⣿⣆");
+        storShrek.add("⠀⠀⠀⠀⢀⡀⠁⠀⠀⠈⠙⠛⠂⠈⣿⣿⣿⣿⣿⠿⡿⢿⣆");
+        storShrek.add("⠀⠀⠀⢀⡾⣁⣀⠀⠴⠂⠙⣗⡀⠀⢻⣿⣿⠭⢤⣴⣦⣤⣹⠀⠀⠀⢀⢴⣶⣆");
+        storShrek.add("⠀⠀⢀⣾⣿⣿⣿⣷⣮⣽⣾⣿⣥⣴⣿⣿⡿⢂⠔⢚⡿⢿⣿⣦⣴⣾⠸⣼⡿");
+        storShrek.add("⠀⢀⡞⠁⠙⠻⠿⠟⠉⠀⠛⢹⣿⣿⣿⣿⣿⣌⢤⣼⣿⣾⣿⡟⠉");
+        storShrek.add("⠀⣾⣷⣶⠇⠀⠀⣤⣄⣀⡀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇");
+        storShrek.add("⠀⠉⠈⠉⠀⠀⢦⡈⢻⣿⣿⣿⣶⣶⣶⣶⣤⣽⡹⣿⣿⣿⣿⡇");
+        storShrek.add("⠀⠉⠈⠉⠀⠀⢦⡈⢻⣿⣿⣿⣶⣶⣶⣶⣤⣽⡹⣿⣿⣿⣿⡇");
+        storShrek.add("⠀⠀⠀⠀⠀⠀⠀⠉⠲⣽⡻⢿⣿⣿⣿⣿⣿⣿⣷⣜⣿⣿⣿⡇");
+        storShrek.add("⠀⠀ ⠀⠀⠀⠀⠀⢸⣿⣿⣷⣶⣮⣭⣽⣿⣿⣿⣿⣿⣿⣿⠇");
+        storShrek.add("⠀⠀⠀⠀⠀⠀⣀⣀⣈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇");
+        storShrek.add("⠀⠀⠀⠀⠀⠀⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃");
+
+        for (int i = 0; i < (försök*2); i+=2) {
+            System.out.println(storShrek.get(i));
+            System.out.println(storShrek.get(i+1));
+        }
+
+    }
+
+    /**
+     *Denna metod väljer ut ett slumpvalt ord ifrån ArrayListen "ordlistan".
+     * @return skickar tillbaka det slumpvalda ordet.
+     */
 
     private static String hämtaSlumpvaltOrd() {
         int randomIndex = (int)(Math.random()*ordlistan.size());
@@ -205,6 +289,7 @@ public class Main {
         //Skriver meddelande för då användaren slutar spelar.
         System.out.println("Hejdå!");
     }
+
 
 }
 
